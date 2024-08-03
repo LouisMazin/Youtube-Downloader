@@ -1,0 +1,7 @@
+Pipfile
+Pipfile.lock
+__pycache__
+Musiques
+Pochettes
+ffmpeg.exe
+ffprobe.exe
