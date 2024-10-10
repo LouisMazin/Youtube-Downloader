@@ -2,7 +2,9 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from animated_toggle import AnimatedToggle
-import qt_material,os,downloader_music
+from qt_material import apply_stylesheet
+from os import path
+import downloader_music
 WidthFenetre = 1750
 HeightFenetre = 875
 HeightButtons = HeightFenetre/17.5
@@ -23,7 +25,7 @@ class Interface(QMainWindow):
         
         self.csvLabel = QLabel("Fichier de chansons :")
         self.csvLineEdit = QLineEdit()
-        self.csvLineEdit.setText(os.path.abspath("chansons.csv"))
+        self.csvLineEdit.setText(path.abspath("chansons.csv"))
         self.csvSearch = QPushButton("Parcourir")
         self.csvSearch.clicked.connect(lambda: self.Parcourir("CSV (*.csv)",self.csvLineEdit))
         
@@ -131,7 +133,7 @@ class Interface(QMainWindow):
         if(self.toggleMode.isChecked() and self.lienLineEdit.text() == "" and (not self.customTags.isChecked())):
             self.callbackLabel.setText('Lien manquant')
             return
-        if(not self.toggleMode.isChecked() and os.path.isfile(self.csvLineEdit.text()) == False):
+        if(not self.toggleMode.isChecked() and path.isfile(self.csvLineEdit.text()) == False):
             self.callbackLabel.setText('Fichier csv introuvable')
             return
         self.callbackLabel.setText("Téléchargement en cours...")
@@ -146,9 +148,10 @@ class Interface(QMainWindow):
     def Parcourir(self,filter,lineEdit):
         self.filename = QFileDialog.getOpenFileName(self, 'Open File', 'c:\\', filter)
         lineEdit.setText(self.filename[0])
-app = QApplication([])
-window = Interface(app)
-qt_material.apply_stylesheet(app, theme='dark_amber.xml')
-app.setStyleSheet(app.styleSheet()+"""*{background-color: transparent;color: #ffffff;border: none;padding: 0;margin: 0;line-height: 0;font-family: "Segoe UI", sans-serif;}QWidget{color: #ffffff;}QLabel{color: #ffffff;}""")
-window.show()
-app.exec()
+def run():
+    app = QApplication([])
+    window = Interface(app)
+    apply_stylesheet(app, theme='dark_amber.xml')
+    app.setStyleSheet(app.styleSheet()+"""*{background-color: transparent;color: #ffffff;border: none;padding: 0;margin: 0;line-height: 0;font-family: "Segoe UI", sans-serif;}QWidget{color: #ffffff;}QLabel{color: #ffffff;}""")
+    window.show()
+    app.exec()
