@@ -13,7 +13,7 @@ class Musique:
         self.filename = artist+" - "+title
     def download(self):
         if(self.artist!="" and self.title!=""):
-            ydl_opts = {"audio-format": "mp3", "outtmpl": self.filename, "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": "0"}], "quiet": "True"}
+            ydl_opts = {"audio-format": "mp3", "outtmpl": self.filename, "postprocessors": [{"key": "FFmpegExtractAudio", "preferredcodec": "mp3", "preferredquality": "0"}], "quiet": "True", "cookiefile": "./cookies.txt"}
         else:
             if(self.url==""):
                 return True
